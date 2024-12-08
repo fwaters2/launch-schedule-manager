@@ -10,7 +10,7 @@ import (
 	"github.com/fwaters2/launch-schedule-manager/server/pkg/seed"
 )
 
-func InitializeInMemoryDB(store Store) {
+func InitializeInMemoryDB(store launches.Store) {
 	log.Println("Initializing schema...")
 
 	// Initialize schema (if required)
@@ -19,7 +19,7 @@ func InitializeInMemoryDB(store Store) {
 	log.Println("Seeding data...")
 
 	// Seed data
-	for _, launch := range Launches {
+	for _, launch := range seed.Launches {
 		store.Create(launch)
 	}
 
