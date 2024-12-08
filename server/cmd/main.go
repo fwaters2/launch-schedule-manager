@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/fwaters2/launch-schedule-manager/server/pkg/launches"
-	"github.com/fwaters/launch-schedule-manager/server/pkg/seed"
+	"github.com/fwaters2/launch-schedule-manager/server/pkg/seed"
 )
 
 func InitializeInMemoryDB(store Store) {
