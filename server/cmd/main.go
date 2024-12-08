@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/fwaters2/launch-schedule-manager/pkg/launches"
+	"github.com/fwaters2/launch-schedule-manager/server/pkg/launches"
 )
 
 func main() {

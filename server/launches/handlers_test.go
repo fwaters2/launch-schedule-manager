@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+
 func TestCreateLaunch(t *testing.T) {
 	store := NewInMemoryStore()
 	logger := log.New(bytes.NewBuffer([]byte{}), "", log.LstdFlags)
@@ -43,5 +44,37 @@ func TestGetLaunchNotFound(t *testing.T) {
 
 	if rr.Code != http.StatusNotFound {
 		t.Errorf("expected status 404, got %d", rr.Code)
+	}
+}
+
+func TestGetLaunch(t *testing.T) {
+	func setupTestStore() Store {
+		store := NewInMemoryStore()
+		// Insert some test data
+		store.Create(Launch{
+			MissionName: "Test Mission A",
+			LaunchTime: time.Date(2024, 5, 20, 14, 0, 0, 0, time.UTC),
+			VehicleName: "Falcon 9",
+			LaunchSite: "LC-39A",
+			Status:     "scheduled",
+		})
+		return store
+	}
+
+	store := setupTestStore()
+	logger := log.New(bytes.NewBuffer([]byte{}), "", log.LstdFlags)
+	h := NewHandler(store, logger)
+
+	req, err := http.NewRequest("GET", "/launches/1", nil)
+	if err != nil {
+		t.Fatalf("could not create request: %v", err)
+	}
+	rr := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(h.GetLaunch)
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Errorf("expected status 200, got %d", rr.Code)
 	}
 }
