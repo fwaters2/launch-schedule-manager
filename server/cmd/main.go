@@ -21,11 +21,11 @@ func main() {
 
 	// Set up router
 	r := mux.NewRouter()
-	r.HandleFunc("/launches", h.CreateLaunch).Methods("POST")
-	r.HandleFunc("/launches", h.ListLaunches).Methods("GET")
 	r.HandleFunc("/launches/{id}", h.GetLaunch).Methods("GET")
 	r.HandleFunc("/launches/{id}", h.UpdateLaunch).Methods("PUT")
 	r.HandleFunc("/launches/{id}", h.DeleteLaunch).Methods("DELETE")
+	r.HandleFunc("/launches", h.CreateLaunch).Methods("POST")
+	r.HandleFunc("/launches", h.ListLaunches).Methods("GET")
 
 	// Start server
 	addr := ":8080"

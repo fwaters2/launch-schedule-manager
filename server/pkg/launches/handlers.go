@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"fmt"
 
 	"github.com/gorilla/mux"
 )
@@ -146,8 +147,8 @@ func (h *Handler) DeleteLaunch(w http.ResponseWriter, r *http.Request) {
 		h.respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-
-	h.respondWithJSON(w, http.StatusOK, map[string]string{"message": "Launch deleted"})
+fmt.Println("Delete: ", http.StatusNoContent)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (h *Handler) respondWithError(w http.ResponseWriter, code int, message string) {
