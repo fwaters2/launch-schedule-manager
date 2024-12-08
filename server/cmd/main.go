@@ -7,7 +7,24 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/fwaters2/launch-schedule-manager/server/pkg/launches"
+	"github.com/fwaters/launch-schedule-manager/server/pkg/seed"
 )
+
+func InitializeInMemoryDB(store Store) {
+	log.Println("Initializing schema...")
+
+	// Initialize schema (if required)
+	// For in-memory stores, this might be implicit.
+
+	log.Println("Seeding data...")
+
+	// Seed data
+	for _, launch := range Launches {
+		store.Create(launch)
+	}
+
+	log.Println("Data seeded successfully.")
+}
 
 func main() {
 	// Basic logger
@@ -15,6 +32,9 @@ func main() {
 
 	// In-memory store
 	store := launches.NewInMemoryStore()
+
+	// Seed data
+	InitializeInMemoryDB(store)
 
 	// Handlers
 	h := launches.NewHandler(store, logger)
